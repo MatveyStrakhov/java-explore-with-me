@@ -12,12 +12,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StatsServerController {
     private final StatsServerService service;
+
     @PostMapping("/hit")
-    public void receiveEndpointHit(@RequestBody EndpointHitDto endpointHitDto){
+    public void receiveEndpointHit(@RequestBody EndpointHitDto endpointHitDto) {
         service.receiveEndpointHit(endpointHitDto);
     }
+
     @GetMapping("/stats")
-    public List<ViewStatsDto> getStats(@RequestParam String start,  @RequestParam String end, @RequestParam(required = false) List<String> uris, @RequestParam(required = false) boolean unique){
+    public List<ViewStatsDto> getStats(@RequestParam String start, @RequestParam String end, @RequestParam(required = false) List<String> uris, @RequestParam(required = false) boolean unique) {
         ViewStatsRequestDto viewStatsRequestDto = ViewStatsRequestDto.builder()
                 .start(start)
                 .end(end)

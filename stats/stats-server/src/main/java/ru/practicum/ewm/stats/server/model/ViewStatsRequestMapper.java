@@ -7,7 +7,8 @@ import java.time.format.DateTimeFormatter;
 
 public class ViewStatsRequestMapper {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    public static ViewStatsRequest toViewStatsRequest(ViewStatsRequestDto dto){
+
+    public static ViewStatsRequest toViewStatsRequest(ViewStatsRequestDto dto) {
         return ViewStatsRequest.builder()
                 .start(LocalDateTime.from(dateTimeFormatter.parse(dto.getStart())))
                 .end(LocalDateTime.from(dateTimeFormatter.parse(dto.getEnd())))

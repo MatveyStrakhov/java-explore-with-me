@@ -9,6 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <groupId>ru.practicum.ewm.stats</groupId>
     <artifactId>stats-dto</artifactId>
 
     <properties>

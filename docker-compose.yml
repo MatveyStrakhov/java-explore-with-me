@@ -8,6 +8,8 @@ services:
       - stats-db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/statsdb
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
 
   stats-db:
     container_name: statsdb
@@ -28,11 +30,16 @@ services:
     depends_on:
       - stats-server
       - ewm-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5433/ewmdb
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
   ewm-db:
     image: postgres:14-alpine
     ports:
       - "6541:5433"
     environment:
+      - PGPORT=5433
       - POSTGRES_DB=ewmdb
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root

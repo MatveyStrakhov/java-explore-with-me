@@ -1,5 +1,6 @@
 package ru.practicum.ewm.stats.client;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
+@ConfigurationProperties(prefix = "url")
 public class StatsClient {
-    private final WebClient webClient = WebClient.create("http://localhost:9090");
+    private String baseUrl;
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    private final WebClient webClient = WebClient.create(getBaseUrl());
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public void hit(String app, String uri, String ip, LocalDateTime timestamp) {
@@ -39,7 +51,8 @@ public class StatsClient {
                 .uri("/stats" + "start=" + start + "end=" + end + "uris=" + uris + "unique" + unique)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<ViewStatsDto>>() {});
+                .bodyToMono(new ParameterizedTypeReference<List<ViewStatsDto>>() {
+                });
         return response.block();
     }
 }

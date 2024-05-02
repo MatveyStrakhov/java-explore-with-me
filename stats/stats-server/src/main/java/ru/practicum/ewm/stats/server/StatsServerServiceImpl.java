@@ -32,12 +32,10 @@ public class StatsServerServiceImpl implements StatsServerService {
                     viewStatsDtoOptionalList.forEach((i) -> i.ifPresent(viewStatsDtoList::add));
                 }
             }
-            if (viewStatsDtoList.isEmpty()) {
-                return Collections.emptyList();
-            } else {
-                viewStatsDtoList.sort(Comparator.comparingLong(ViewStatsDto::getHits).reversed());
-                return viewStatsDtoList;
-            }
+
+            viewStatsDtoList.sort(Comparator.comparingLong(ViewStatsDto::getHits).reversed());
+            return viewStatsDtoList;
+
         } else {
             List<Optional<ViewStatsDto>> viewStatsDtoOptionalList;
             if (viewStatsRequest.isUnique()) {
@@ -49,12 +47,8 @@ public class StatsServerServiceImpl implements StatsServerService {
                 viewStatsDtoOptionalList.forEach((i) -> i.ifPresent(viewStatsDtoList::add));
             }
         }
-        if (viewStatsDtoList.isEmpty()) {
-            return Collections.emptyList();
-        } else {
-            viewStatsDtoList.sort(Comparator.comparingLong(ViewStatsDto::getHits).reversed());
-            return viewStatsDtoList;
-        }
+        viewStatsDtoList.sort(Comparator.comparingLong(ViewStatsDto::getHits).reversed());
+        return viewStatsDtoList;
     }
 
     @Override

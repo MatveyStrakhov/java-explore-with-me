@@ -1,6 +1,7 @@
 version: '3.1'
 services:
   stats-server:
+    container_name: stats-server
     build: ./stats/stats-server
     ports:
       - "9090:9090"
@@ -24,6 +25,7 @@ services:
       - ./stats/stats-server/src/main/resources/ewmschema.sql:/docker-entrypoint-initdb.d/ewmschema.sql
 
   ewm-service:
+    container_name: ewm-service
     build: ./main-service
     ports:
       - "8080:8080"
@@ -35,6 +37,7 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
   ewm-db:
+    container_name: ewm-db
     image: postgres:14-alpine
     ports:
       - "6541:5433"

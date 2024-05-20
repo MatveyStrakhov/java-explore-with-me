@@ -23,7 +23,7 @@ services:
     volumes:
       - ./stats/stats-server/src/main/resources/ewmschema.sql:/docker-entrypoint-initdb.d/ewmschema.sql
 
-  main-server:
+  ewm-service:
     build: ./main-service
     ports:
       - "8080:8080"

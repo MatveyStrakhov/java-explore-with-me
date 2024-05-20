@@ -82,18 +82,12 @@
         </dependency>
     </dependencies>
     <build>
-        <pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>ru.practicum.ewm.EWMMainServiceApp</mainClass>
-                    <layout>JAR</layout>
-                </configuration>
             </plugin>
         </plugins>
-    </pluginManagement>
     </build>
 
 </project>

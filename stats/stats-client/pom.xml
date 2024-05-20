@@ -8,7 +8,7 @@
         <artifactId>stats</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
+    <groupId>ru.practicum.ewm.stats</groupId>
     <artifactId>stats-client</artifactId>
 
     <properties>

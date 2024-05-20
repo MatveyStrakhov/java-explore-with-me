@@ -30,6 +30,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
+      - stats-db
       - stats-server
       - ewm-db
     environment:

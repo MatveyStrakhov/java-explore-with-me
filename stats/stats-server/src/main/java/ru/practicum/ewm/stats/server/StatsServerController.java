@@ -1,6 +1,8 @@
 package ru.practicum.ewm.stats.server;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.stats.dto.EndpointHitDto;
 import ru.practicum.ewm.stats.dto.ViewStatsDto;
@@ -14,8 +16,8 @@ public class StatsServerController {
     private final StatsServerService service;
 
     @PostMapping("/hit")
-    public void receiveEndpointHit(@RequestBody EndpointHitDto endpointHitDto) {
-        service.receiveEndpointHit(endpointHitDto);
+    public ResponseEntity<?> receiveEndpointHit(@RequestBody EndpointHitDto endpointHitDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.receiveEndpointHit(endpointHitDto));
     }
 
     @GetMapping("/stats")

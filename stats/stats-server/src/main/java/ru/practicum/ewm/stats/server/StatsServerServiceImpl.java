@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.ewm.stats.dto.EndpointHitDto;
 import ru.practicum.ewm.stats.dto.ViewStatsDto;
 import ru.practicum.ewm.stats.dto.ViewStatsRequestDto;
+import ru.practicum.ewm.stats.server.exception.DateTimeException;
 import ru.practicum.ewm.stats.server.model.EndpointHitMapper;
 import ru.practicum.ewm.stats.server.model.ViewStatsRequest;
 import ru.practicum.ewm.stats.server.model.ViewStatsRequestMapper;
@@ -21,6 +22,8 @@ public class StatsServerServiceImpl implements StatsServerService {
     @Override
     public List<ViewStatsDto> getStats(ViewStatsRequestDto viewStatsRequestDto) {
         ViewStatsRequest viewStatsRequest = ViewStatsRequestMapper.toViewStatsRequest(viewStatsRequestDto);
+        if (viewStatsRequest.getStart().isAfter(viewStatsRequest.getEnd()))
+            throw new DateTimeException("Start after end.");
         List<ViewStatsDto> viewStatsDtoList = new ArrayList<>();
         if (viewStatsRequest.getUris() != null && !(viewStatsRequest.getUris().isEmpty())) {
             for (String uri : viewStatsRequest.getUris()) {
@@ -55,8 +58,8 @@ public class StatsServerServiceImpl implements StatsServerService {
     }
 
     @Override
-    public void receiveEndpointHit(EndpointHitDto endpointHitDto) {
-        repository.save(EndpointHitMapper.toEndpointHit(endpointHitDto));
+    public EndpointHitDto receiveEndpointHit(EndpointHitDto endpointHitDto) {
+        return EndpointHitMapper.toEndpointHitDto(repository.save(EndpointHitMapper.toEndpointHit(endpointHitDto)));
 
     }
 }

@@ -17,4 +17,12 @@ public class EndpointHitMapper {
                 .timestamp(LocalDateTime.from(dateTimeFormatter.parse(endpointHitDto.getTimestamp())))
                 .build();
     }
+
+    public static EndpointHitDto toEndpointHitDto(EndpointHit endpointHit) {
+        return EndpointHitDto.builder()
+                .app(endpointHit.getApp())
+                .uri(endpointHit.getUri())
+                .ip(endpointHit.getIp())
+                .build();
+    }
 }

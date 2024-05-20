@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @ConfigurationProperties(prefix = "url")
 public class StatsClient {
-    private String baseUrl;
+    private String baseUrl = "http://stats-server:9090";
 
     public String getBaseUrl() {
         return baseUrl;
@@ -29,26 +29,31 @@ public class StatsClient {
     private final WebClient webClient = WebClient.create(getBaseUrl());
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public void hit(String app, String uri, String ip, LocalDateTime timestamp) {
+    public Void hit(String app, String uri, String ip, LocalDateTime timestamp) {
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .app(app)
                 .uri(uri)
                 .ip(ip)
                 .timestamp(dateTimeFormatter.format(timestamp))
                 .build();
-        webClient
+        Mono<Void> response = webClient
                 .post()
                 .uri("/hit")
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(endpointHitDto, EndpointHitDto.class);
+                .body(Mono.just(endpointHitDto), EndpointHitDto.class)
+                .retrieve()
+                .bodyToMono(Void.class);
+        return response.block();
     }
 
     public List<ViewStatsDto> getStats(LocalDateTime startTime, LocalDateTime endTime, List<String> uris, Boolean unique) {
         String start = dateTimeFormatter.format(startTime);
         String end = dateTimeFormatter.format(endTime);
+        StringBuilder builder = new StringBuilder();
+        uris.forEach(uri -> builder.append("&uris=").append(uri));
+        String listedUris = builder.toString();
         Mono<List<ViewStatsDto>> response = webClient
                 .get()
-                .uri("/stats" + "start=" + start + "end=" + end + "uris=" + uris + "unique" + unique)
+                .uri("/stats?" + "start=" + start + "&end=" + end + listedUris + "&unique=" + unique)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<ViewStatsDto>>() {

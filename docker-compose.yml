@@ -31,7 +31,7 @@ services:
       - stats-server
       - ewm-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5433/ewmdb
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5433/ewmdb
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
   ewm-db:
@@ -43,3 +43,5 @@ services:
       - POSTGRES_DB=ewmdb
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+    volumes:
+      - ./main-service/src/main/resources/ewmmainschema.sql:/docker-entrypoint-initdb.d/ewmmainschema.sql

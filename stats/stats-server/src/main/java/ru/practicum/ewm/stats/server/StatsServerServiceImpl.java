@@ -1,6 +1,7 @@
 package ru.practicum.ewm.stats.server;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewm.stats.dto.EndpointHitDto;
 import ru.practicum.ewm.stats.dto.ViewStatsDto;
@@ -11,6 +12,7 @@ import ru.practicum.ewm.stats.server.model.ViewStatsRequestMapper;
 
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StatsServerServiceImpl implements StatsServerService {
@@ -34,6 +36,7 @@ public class StatsServerServiceImpl implements StatsServerService {
             }
 
             viewStatsDtoList.sort(Comparator.comparingLong(ViewStatsDto::getHits).reversed());
+            log.error(viewStatsDtoList.toString());
             return viewStatsDtoList;
 
         } else {

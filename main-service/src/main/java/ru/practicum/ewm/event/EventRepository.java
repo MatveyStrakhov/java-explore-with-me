@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.practicum.ewm.event.model.Event;
+import ru.practicum.ewm.event.model.EventFullDto;
 import ru.practicum.ewm.event.model.EventState;
 
 import java.time.LocalDateTime;
@@ -36,4 +37,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query("select e from Event e join e.category c where c.id = ?1")
     List<Event> findByCategoryId(long catId);
+
+    @Query("select e from Event e join e.location l where distance(?1, ?2, l.lat, l.lon) <= ?3")
+    List<Event> findByPoint(float lat, float lon, int radius, PageRequest pageRequest);
 }

@@ -9,5 +9,5 @@ import java.util.List;
 public interface StatsServerService {
     List<ViewStatsDto> getStats(ViewStatsRequestDto viewStatsRequestDto);
 
-    void receiveEndpointHit(EndpointHitDto endpointHitDto);
+    EndpointHitDto receiveEndpointHit(EndpointHitDto endpointHitDto);
 }

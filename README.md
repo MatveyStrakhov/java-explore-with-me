@@ -1,2 +1,3 @@
 # java-explore-with-me
-Template repository for ExploreWithMe project.
+Repository for ExploreWithMe graduation project.
+https://github.com/MatveyStrakhov/java-explore-with-me/pull/3

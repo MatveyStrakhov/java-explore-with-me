@@ -36,4 +36,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query("select e from Event e join e.category c where c.id = ?1")
     List<Event> findByCategoryId(long catId);
+
+    @Query("select e from Event e join e.location l where distance(?1, ?2, l.lat, l.lon) <= ?3")
+    List<Event> findByPoint(float lat, float lon, int radius, PageRequest pageRequest);
 }

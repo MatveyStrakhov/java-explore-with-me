@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class ExceptionsHandler {
 
     @ExceptionHandler(value = {UserNotFoundException.class, CategoryNotFoundException.class, CompilationNotFoundException.class,
-            EventNotFoundException.class, RequestNotFoundException.class})
+            EventNotFoundException.class, RequestNotFoundException.class, PointNotFoundException.class})
     public ResponseEntity<Object> handleNotFoundException(NotFoundException e) {
         ApiError apiError = ApiError.builder()
                 .message(e.getMessage())
